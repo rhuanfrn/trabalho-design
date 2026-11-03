@@ -5,7 +5,7 @@ O programa consiste em um Sistema de Gerenciamento de Estoque desenvolvido em li
 
 NOMES DOS INTEGRANTES:
 Rhuan Carlos Franchi Romão
-isabela lorrayne ferreira baessa
+Isabela lorrayne ferreira baessa
 Enzo Martins Costa
 Julia Rodrigues dos Santos
 Jhonny Fontes
