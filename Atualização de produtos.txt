@@ -1,0 +1,75 @@
+int opcaoAtualizacao;
+
+printf("\n----- ATUALIZACAO DE PRODUTOS -----\n");
+
+printf("\nDigite o nome do produto: ");
+scanf(" %49[^\n]", busca);
+
+encontrado = 0;
+
+for (int i = 0; i < total; i++) {
+
+    if (strcmp(nomes[i], busca) == 0) {
+
+        printf("\n----- PRODUTO ENCONTRADO -----\n");
+        printf("Nome: %s\n", nomes[i]);
+        printf("Preco: R$ %.2f\n", precos[i]);
+        printf("Quantidade: %d\n", quantidades[i]);
+
+        printf("\nO que deseja atualizar?\n");
+        printf("1 - Alterar preco\n");
+        printf("2 - Alterar quantidade\n");
+        printf("3 - Alterar ambos\n");
+        printf("Opcao: ");
+        scanf("%d", &opcaoAtualizacao);
+
+        switch (opcaoAtualizacao) {
+
+            case 1:
+                printf("\nDigite o novo preco: R$ ");
+                scanf("%f", &precos[i]);
+
+                if (precos[i] < 0) {
+                    printf("\nPreco invalido!\n");
+                } else {
+                    printf("\nPreco atualizado com sucesso!\n");
+                }
+                break;
+
+            case 2:
+                printf("\nDigite a nova quantidade: ");
+                scanf("%d", &quantidades[i]);
+
+                if (quantidades[i] < 0) {
+                    printf("\nQuantidade invalida!\n");
+                } else {
+                    printf("\nQuantidade atualizada com sucesso!\n");
+                }
+                break;
+
+            case 3:
+                printf("\nDigite o novo preco: R$ ");
+                scanf("%f", &precos[i]);
+
+                printf("Digite a nova quantidade: ");
+                scanf("%d", &quantidades[i]);
+
+                if (precos[i] < 0 || quantidades[i] < 0) {
+                    printf("\nValores invalidos!\n");
+                } else {
+                    printf("\nProduto atualizado com sucesso!\n");
+                }
+                break;
+
+            default:
+                printf("\nOpcao invalida!\n");
+        }
+
+        encontrado = 1;
+        break;
+    }
+}
+
+if (encontrado == 0) {
+    printf("\nProduto nao encontrado!\n");
+}
