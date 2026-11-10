@@ -1,0 +1,365 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    char nomes[100][50];
+    float precos[100];
+    int quantidades[100];
+
+    int total = 0;
+    int opcao;
+    int opcaoConsulta;
+    int opcaoEstoque;
+    int opcaoAtualizacao;
+    int encontrado;
+    int quantidade;
+    int novaQuantidade;
+    int i;
+
+    float novoPreco;
+    char busca[50];
+
+    do {
+
+        printf("\n========== SISTEMA DE ESTOQUE ==========\n");
+        printf("1 - Cadastrar produtos\n");
+        printf("2 - Consultar produtos\n");
+        printf("3 - Alterar estoque\n");
+        printf("4 - Atualizar produtos\n");
+        printf("0 - Sair\n");
+        printf("========================================\n");
+
+        printf("\nEscolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+
+            // 1 - CADASTRO DE PRODUTOS
+
+            case 1:
+
+                printf("\n----- CADASTRO DE PRODUTOS -----\n");
+
+                if (total < 100) {
+
+                    printf("\nDigite o nome do produto: ");
+                    scanf(" %49[^\n]", nomes[total]);
+
+                    printf("Digite o preco do produto: R$ ");
+                    scanf("%f", &precos[total]);
+
+                    printf("Digite a quantidade: ");
+                    scanf("%d", &quantidades[total]);
+
+                    if (precos[total] < 0 || quantidades[total] < 0) {
+
+                        printf("\nValores invalidos! Cadastro cancelado.\n");
+
+                    } else {
+
+                        total++;
+
+                        printf("\nProduto cadastrado com sucesso!\n");
+
+                    }
+
+                } else {
+
+                    printf("\nLimite de produtos atingido!\n");
+
+                }
+
+                break;
+
+
+            // 2 - CONSULTA DE PRODUTOS
+
+            case 2:
+
+                printf("\n----- CONSULTA DE PRODUTOS -----\n");
+                printf("1 - Listar todos os produtos\n");
+                printf("2 - Pesquisar produto pelo nome\n");
+
+                printf("\nEscolha uma opcao: ");
+                scanf("%d", &opcaoConsulta);
+
+                if (opcaoConsulta == 1) {
+
+                    if (total == 0) {
+
+                        printf("\nNenhum produto cadastrado!\n");
+
+                    } else {
+
+                        for (i = 0; i < total; i++) {
+
+                            printf("\n----- PRODUTO %d -----\n", i + 1);
+                            printf("Nome: %s\n", nomes[i]);
+                            printf("Preco: R$ %.2f\n", precos[i]);
+                            printf("Quantidade: %d\n", quantidades[i]);
+
+                        }
+
+                    }
+
+                }
+
+                else if (opcaoConsulta == 2) {
+
+                    encontrado = 0;
+
+                    printf("\nDigite o nome do produto: ");
+                    scanf(" %49[^\n]", busca);
+
+                    for (i = 0; i < total; i++) {
+
+                        if (strcmp(nomes[i], busca) == 0) {
+
+                            printf("\n----- PRODUTO ENCONTRADO -----\n");
+                            printf("Nome: %s\n", nomes[i]);
+                            printf("Preco: R$ %.2f\n", precos[i]);
+                            printf("Quantidade: %d\n", quantidades[i]);
+
+                            encontrado = 1;
+                            break;
+
+                        }
+
+                    }
+
+                    if (encontrado == 0) {
+
+                        printf("\nProduto nao encontrado!\n");
+
+                    }
+
+                }
+
+                else {
+
+                    printf("\nOpcao invalida!\n");
+
+                }
+
+                break;
+
+
+            // 3 - ENTRADA E SAIDA DE ESTOQUE
+
+            case 3:
+
+                printf("\n----- ESTOQUE -----\n");
+                printf("1 - Entrada de estoque\n");
+                printf("2 - Saida de estoque\n");
+
+                printf("\nEscolha uma opcao: ");
+                scanf("%d", &opcaoEstoque);
+
+                if (opcaoEstoque != 1 && opcaoEstoque != 2) {
+
+                    printf("\nOpcao invalida!\n");
+
+                    break;
+
+                }
+
+                encontrado = 0;
+
+                printf("\nDigite o nome do produto: ");
+                scanf(" %49[^\n]", busca);
+
+                for (i = 0; i < total; i++) {
+
+                    if (strcmp(nomes[i], busca) == 0) {
+
+                        printf("\nProduto: %s\n", nomes[i]);
+                        printf("Quantidade atual: %d\n", quantidades[i]);
+
+                        printf("\nDigite a quantidade: ");
+                        scanf("%d", &quantidade);
+
+                        if (quantidade <= 0) {
+
+                            printf("\nQuantidade invalida!\n");
+
+                        }
+
+                        else if (opcaoEstoque == 1) {
+
+                            quantidades[i] = quantidades[i] + quantidade;
+
+                            printf("\nEntrada realizada com sucesso!\n");
+
+                        }
+
+                        else if (opcaoEstoque == 2) {
+
+                            if (quantidade <= quantidades[i]) {
+
+                                quantidades[i] = quantidades[i] - quantidade;
+
+                                printf("\nSaida realizada com sucesso!\n");
+
+                            } else {
+
+                                printf("\nEstoque insuficiente!\n");
+
+                            }
+
+                        }
+
+                        printf("Estoque atual: %d\n", quantidades[i]);
+
+                        encontrado = 1;
+                        break;
+
+                    }
+
+                }
+
+                if (encontrado == 0) {
+
+                    printf("\nProduto nao encontrado!\n");
+
+                }
+
+                break;
+
+
+            // 4 - ATUALIZACAO DE PRODUTOS
+
+            case 4:
+
+                printf("\n----- ATUALIZACAO DE PRODUTOS -----\n");
+
+                encontrado = 0;
+
+                printf("\nDigite o nome do produto: ");
+                scanf(" %49[^\n]", busca);
+
+                for (i = 0; i < total; i++) {
+
+                    if (strcmp(nomes[i], busca) == 0) {
+
+                        printf("\n----- PRODUTO ENCONTRADO -----\n");
+                        printf("Nome: %s\n", nomes[i]);
+                        printf("Preco: R$ %.2f\n", precos[i]);
+                        printf("Quantidade: %d\n", quantidades[i]);
+
+                        printf("\nO que deseja atualizar?\n");
+                        printf("1 - Alterar preco\n");
+                        printf("2 - Alterar quantidade\n");
+                        printf("3 - Alterar ambos\n");
+
+                        printf("Opcao: ");
+                        scanf("%d", &opcaoAtualizacao);
+
+                        switch (opcaoAtualizacao) {
+
+                            case 1:
+
+                                printf("\nDigite o novo preco: R$ ");
+                                scanf("%f", &novoPreco);
+
+                                if (novoPreco < 0) {
+
+                                    printf("\nPreco invalido!\n");
+
+                                } else {
+
+                                    precos[i] = novoPreco;
+
+                                    printf("\nPreco atualizado com sucesso!\n");
+
+                                }
+
+                                break;
+
+
+                            case 2:
+
+                                printf("\nDigite a nova quantidade: ");
+                                scanf("%d", &novaQuantidade);
+
+                                if (novaQuantidade < 0) {
+
+                                    printf("\nQuantidade invalida!\n");
+
+                                } else {
+
+                                    quantidades[i] = novaQuantidade;
+
+                                    printf("\nQuantidade atualizada com sucesso!\n");
+
+                                }
+
+                                break;
+
+
+                            case 3:
+
+                                printf("\nDigite o novo preco: R$ ");
+                                scanf("%f", &novoPreco);
+
+                                printf("Digite a nova quantidade: ");
+                                scanf("%d", &novaQuantidade);
+
+                                if (novoPreco < 0 || novaQuantidade < 0) {
+
+                                    printf("\nValores invalidos!\n");
+
+                                } else {
+
+                                    precos[i] = novoPreco;
+                                    quantidades[i] = novaQuantidade;
+
+                                    printf("\nProduto atualizado com sucesso!\n");
+
+                                }
+
+                                break;
+
+
+                            default:
+
+                                printf("\nOpcao invalida!\n");
+
+                        }
+
+                        encontrado = 1;
+                        break;
+
+                    }
+
+                }
+
+                if (encontrado == 0) {
+
+                    printf("\nProduto nao encontrado!\n");
+
+                }
+
+                break;
+
+
+            // 0 - SAIR DO SISTEMA
+
+            case 0:
+
+                printf("\nSistema encerrado!\n");
+
+                break;
+
+
+            default:
+
+                printf("\nOpcao invalida! Tente novamente.\n");
+
+        }
+
+    } while (opcao != 0);
+
+    return 0;
+
+}
